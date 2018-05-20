@@ -1,0 +1,9 @@
+{
+  "beasts": [
+    {"text": "Beast1", "backgroundColor": "blue", "image": "https://s3.amazonaws.com/beastfinder/beastimages/Big-Purple-Monster_Full-Size1.jpg"},
+    {"text": "Beast2", "backgroundColor": "blue", "image": "https://s3.amazonaws.com/beastfinder/beastimages/Big-Purple-Monster_Full-Size1.jpg"},
+    {"text": "Beast3", "backgroundColor": "blue", "image": "https://s3.amazonaws.com/beastfinder/beastimages/Big-Purple-Monster_Full-Size1.jpg"},
+    {"text": "Beast4", "backgroundColor": "blue", "image": "https://s3.amazonaws.com/beastfinder/beastimages/Big-Purple-Monster_Full-Size1.jpg"},
+    {"text": "Beast5", "backgroundColor": "blue", "image": "https://s3.amazonaws.com/beastfinder/beastimages/Big-Purple-Monster_Full-Size1.jpg"},
+  ]
+}

@@ -10,7 +10,7 @@ export default class Main extends React.Component {
         <TouchableOpacity onPress={ () => navigate('Filter')}>
           <Icon
             name='sort'
-            color='white'
+            color='white' 
             size={30}
             />
         </TouchableOpacity>
@@ -26,3 +26,6 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
 });
+
+
+

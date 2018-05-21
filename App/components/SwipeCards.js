@@ -44,6 +44,8 @@ export default class App extends React.Component {
   }
 
   handleYup (card) {
+    const { navigate } = this.props.navigation;
+    navigate('Scheduler')
     console.log(`Yup for ${card.text}`)
   }
   handleNope (card) {
@@ -61,7 +63,7 @@ export default class App extends React.Component {
         renderCard={(cardData) => <Card {...cardData} />}
         renderNoMoreCards={() => <NoMoreCards />} 
 
-        handleYup={this.handleYup}
+        handleYup={this.handleYup.bind(this)}
         handleNope={this.handleNope}
         showMaybe={false}  
         hasMaybeAction

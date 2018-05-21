@@ -13,7 +13,7 @@ export default class Finder extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Header navigation={this.props.navigation}/>
+        <Header/>
         <FilterButton navigation={this.props.navigation}/>
         <SwipeCards style={{flex: 1}} navigation={this.props.navigation}/>
       </View>

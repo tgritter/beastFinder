@@ -1,5 +1,8 @@
 export const FILTER_TYPE = {
-  beastType: 'beast_type'
+  beastTemperment: 'beast_temperment',
+  beastColor: 'beast_color',
+  beastHairy: 'beast_hairy',
+  
 }
 
 export const SELECT_BEAST = {

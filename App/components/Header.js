@@ -9,11 +9,13 @@ export default class Header extends React.Component {
   }
   
   render() {
-    const { standardTextBold } = TEXT_TYPES;
+    const { headerText } = TEXT_TYPES;
 
     return (
       <View style={styles.header}> 
-        <Text style={standardTextBold}>Beast Keeper</Text>      
+        <View style={styles.flex}>
+          <Text style={headerText}>Beast Keeper</Text>
+        </View>       
       </View>
     );
   }
@@ -30,6 +32,6 @@ const styles = StyleSheet.create({
   },
   flex: {
     flex: 1,
-    marginTop: 40, 
+    marginTop: 30,   
   }
 });

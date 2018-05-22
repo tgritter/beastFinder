@@ -8,7 +8,19 @@ export const SCREEN_HEIGHT = Dimensions.get('window').height
 export const HEADER_COLOR = 'blue'
 
 export const TEXT_TYPES = {
-  standardTextBold: {
+  headerText: { 
+    fontSize: 18,
+    color: 'white',
+    textAlign: 'center',
+    fontWeight: 'bold',
+  },
+  standardTextWhite: {
+    fontSize: 15,
+    color: 'white',
+    textAlign: 'center',
+    fontWeight: 'bold',
+  },
+  standardTextBlack: {
     fontSize: 15,
     color: 'black',
     textAlign: 'center',

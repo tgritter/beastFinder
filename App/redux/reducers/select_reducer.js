@@ -1,7 +1,7 @@
 import {SELECT_BEAST} from '../actions/types';
 
 const INITIAL_STATE = {
-  beastSelected: 'All',
+  beastSelected: {},
 };
 
 export default (state = INITIAL_STATE, action) => {

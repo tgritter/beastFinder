@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, } from 'react-native';
-import {SCREEN_WIDTH, HEADER_COLOR} from '../constants/Constants';
+import {SCREEN_WIDTH, MAIN_COLOR} from '../constants/Constants';
 
 export default class Header extends React.Component {
 
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     height: 60,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: HEADER_COLOR,
+    backgroundColor: MAIN_COLOR,
   },
   flex: {
     flex: 1,

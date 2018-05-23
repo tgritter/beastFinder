@@ -5,4 +5,4 @@ export const SCREEN_WIDTH = Dimensions.get('window').width
 export const SCREEN_HEIGHT = Dimensions.get('window').height
 
 //Colors
-export const HEADER_COLOR = '#202020'
+export const MAIN_COLOR = '#202020'

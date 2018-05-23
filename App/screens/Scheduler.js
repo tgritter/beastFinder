@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, StyleSheet, Image, Text, ScrollView } from 'react-native'
 import { Calendar } from 'react-native-calendars'
-import {SCREEN_WIDTH} from '../constants/Constants';
+import {SCREEN_WIDTH, MAIN_COLOR} from '../constants/Constants';
 
 import Header from '../components/Header'
 import { connect } from 'react-redux';
@@ -100,11 +100,11 @@ class Scheduler extends React.Component {
 
   //Render Text Based on Whether Appointment on Current Day
   renderButtonText(){
-    var string = 'Book Appointment'
+    var string = 'Schedule Meeting'
     const currentDay = this.state.currentDay
     if (this.state.markedDates[currentDay]) {
       if(this.state.markedDates[currentDay].marked){
-        string = 'Cancel Appointment'
+        string = 'Cancel Meeting'
       }
     }
     return string
@@ -132,7 +132,7 @@ class Scheduler extends React.Component {
             <View style={styles.line}/>
 
             <View style={styles.textContainerPadding}>
-              <Text style={styles.standardTextSmallBlack}>Book Appointment</Text>
+              <Text style={styles.standardTextSmallBlack}>Schedule Meeting</Text>  
             </View>
 
             <Calendar
@@ -146,7 +146,7 @@ class Scheduler extends React.Component {
 
             <View style={styles.buttonContainer}>
               <Button
-                backgroundColor={'#202020'}
+                backgroundColor={MAIN_COLOR}
                 title={this.renderButtonText()}
                 onPress={() => this.scheduleAppointment()}
               />

@@ -1,10 +1,10 @@
 import React from 'react';
 import { StyleSheet, Text, View, Dimensions } from 'react-native';
-import SwipeCards from '../components/SwipeCards'
-import FilterButton from '../components/FilterButton'
-import SwipeExplain from '../components/SwipeExplain'
 import Header from '../components/Header'
-import {SCREEN_WIDTH, SCREEN_HEIGHT} from '../constants/Constants';
+import FilterButton from '../components/FilterButton'
+import SwipeCards from '../components/SwipeCards'
+import SwipeExplain from '../components/SwipeExplain'
+import {SCREEN_WIDTH} from '../constants/Constants';
 
 export default class Finder extends React.Component {
   constructor(props) {
@@ -17,12 +17,11 @@ export default class Finder extends React.Component {
         <Header/>
         <FilterButton navigation={this.props.navigation}/>
         <SwipeCards style={{flex: 1}} navigation={this.props.navigation}/>
-        <SwipeExplain/> 
+        <SwipeExplain/>
       </View>
     );
   }
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,

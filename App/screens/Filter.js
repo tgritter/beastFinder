@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, Dimensions, Picker } from 'react-native';
-import {SCREEN_WIDTH, SCREEN_HEIGHT, TEXT_TYPES} from '../constants/Constants';
+import {SCREEN_WIDTH, SCREEN_HEIGHT, MAIN_COLOR} from '../constants/Constants';
 import { setBeastTemperment, setBeastColor, setBeastHairy } from '../redux/actions';
 import { connect } from 'react-redux';
 import { Button } from 'react-native-elements';
@@ -88,7 +88,7 @@ class BeastFilter extends React.Component {
         {this.renderTempermentPicker()}
 
         <Button
-          backgroundColor={'#202020'}
+          backgroundColor={MAIN_COLOR}
           icon={{name: 'sort'}}
           title='Filter Choices'
           onPress={() => navigate('Finder')}

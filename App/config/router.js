@@ -1,17 +1,17 @@
-import { DrawerNavigator} from 'react-navigation';
+import { createStackNavigator} from 'react-navigation';
 
 import Finder from '../screens/Finder'
 import Filter from '../screens/Filter'
 import Scheduler from '../screens/Scheduler'
 
-export const MainStack = DrawerNavigator({
+export const MainStack = createStackNavigator({
   Finder: {
     screen: Finder,
     navigationOptions: {
       header: null,
     },
   },
-  Filter: { 
+  Filter: {
     screen: Filter,
     navigationOptions: {
       header: null,

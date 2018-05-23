@@ -1,143 +1,159 @@
 import React from 'react'
-import moment from 'moment' // 2.20.1
-import { View, StyleSheet, Image, Text, ScrollView } from 'react-native' // 0.0.1
-import { Calendar } from 'react-native-calendars' // 1.16.1
-import {SCREEN_WIDTH, SCREEN_HEIGHT, TEXT_TYPES} from '../constants/Constants';
-import { Button } from 'react-native-elements';
+import { View, StyleSheet, Image, Text, ScrollView } from 'react-native'
+import { Calendar } from 'react-native-calendars'
+import {SCREEN_WIDTH} from '../constants/Constants';
+
 import Header from '../components/Header'
 import { connect } from 'react-redux';
 import BackButton from '../components/BackButton'
+import { Button } from 'react-native-elements';
 
-const _format = 'YYYY-MM-DD'
-const _today = moment().format(_format)
-const _maxDate = moment().add(15, 'days').format(_format)
+import moment from 'moment'
+const format = 'YYYY-MM-DD'
+const today = moment().format(format)
+const maxDate = moment().add(30, 'days').format(format)
 
 class Scheduler extends React.Component {
   // It is not possible to select some to current day.
   initialState = {
-      [_today]: {selected: true}
+      [today]: {selected: true}
   }
 
   constructor() {
     super();
-
     this.state = {
-      _markedDates: this.initialState,
-      _markedDay: _today
+      markedDates: this.initialState,
+      currentDay: today
     }
   }
 
   onDaySelect = (day) => {
-      const _selectedDay = moment(day.dateString).format(_format);
-      const _markedDay= this.state._markedDay
+    const selectedDay = moment(day.dateString).format(format);
+    const currentDay = this.state.currentDay
 
-      let marked = true;
-      let markedFalse = false
+    let trueString = true;
+    let falseString = false
 
-      let markedSelectedCheck = false;
-      if (this.state._markedDates[_selectedDay]) {
-          // Already in marked dates, so reverse current marked state
-        markedSelectedCheck = this.state._markedDates[_selectedDay].marked;
-      }
-
-      let markedDayCheck = false;
-      if (this.state._markedDates[_markedDay]) {
-          // Already in marked dates, so reverse current marked state
-        markedDayCheck = this.state._markedDates[_markedDay].marked;
-      }
-
-      // Create a new object using object property spread since it should be immutable
-      // Reading: https://davidwalsh.name/merge-objects
-      const updatedMarkedDates = {...this.state._markedDates, ...{ [_selectedDay]: { selected: marked, marked: markedSelectedCheck }, [_markedDay]: { selected: markedFalse, marked: markedDayCheck } } }
-
-      // Triggers component to render again, picking up the new state
-      this.setState({
-        _markedDates: updatedMarkedDates,
-        _markedDay: _selectedDay
-      });
-  }
-
-  scheduleAppointment = () => {
-    const _markedDay= this.state._markedDay
-
-    let trueString = true
-    let markedDayCheck = true;
-    if (this.state._markedDates[_markedDay]) {
-        // Already in marked dates, so reverse current marked state
-      markedDayCheck = !this.state._markedDates[_markedDay].marked;
+    //Check if Selected Day is Selected
+    let selectedDayCheck = false;
+    if (this.state.markedDates[selectedDay]) {
+      selectedDayCheck = this.state.markedDates[selectedDay].marked;
     }
 
-    // Create a new object using object property spread since it should be immutable
-    // Reading: https://davidwalsh.name/merge-objects
-    const updatedMarkedDates = {...this.state._markedDates, ...{ [_markedDay]: { marked: markedDayCheck, selected: trueString } } }
+    //Check if Current Day is Selected
+    let currentDayCheck = false;
+    if (this.state.markedDates[currentDay]) {
+      currentDayCheck = this.state.markedDates[currentDay].marked;
+    }
 
-    // Triggers component to render again, picking up the new state
+    //Update Selected Date to Selected
+    //Updated Current Date to Unselected
+    const updatedMarkedDates = {
+      ...this.state.markedDates, ...{
+        [selectedDay]: { selected: trueString, marked: selectedDayCheck },
+        [currentDay]: { selected: falseString, marked: currentDayCheck }
+      }
+    }
     this.setState({
-      _markedDates: updatedMarkedDates,
+      markedDates: updatedMarkedDates,
+      currentDay: selectedDay
     });
   }
 
-  render() {
+  scheduleAppointment = () => {
+    const currentDay = this.state.currentDay
 
-    const { standardTextBlack } = TEXT_TYPES;
+    let trueString = true
+
+    let markedDayCheck = true;
+    if (this.state.markedDates[currentDay]) {
+      markedDayCheck = !this.state.markedDates[currentDay].marked;
+    }
+
+    const updatedMarkedDates = {
+      ...this.state.markedDates, ...{
+        [currentDay]: { selected: trueString, marked: markedDayCheck }
+      }
+    }
+    this.setState({
+      markedDates: updatedMarkedDates,
+    });
+  }
+
+  //Render Text Function for Simplification
+  renderText(category, answer){
+    return(
+      <View style={styles.textContainerPadding}>
+        <Text style={styles.standardTextBlack}>{category} {answer}</Text>
+      </View>
+    )
+  }
+
+  //Render Text Function for Simplification
+  renderCategoriesText(category, answer){
+    return(
+      <View style={styles.textContainer}>
+        <Text style={styles.standardTextBlack}>{category}: {answer}</Text>
+      </View>
+    )
+  }
+
+  //Render Text Based on Whether Appointment on Current Day
+  renderButtonText(){
+    var string = 'Book Appointment'
+    const currentDay = this.state.currentDay
+    if (this.state.markedDates[currentDay]) {
+      if(this.state.markedDates[currentDay].marked){
+        string = 'Cancel Appointment'
+      }
+    }
+    return string
+  }
+
+  render() {
     return (
       <View style={styles.container}>
         <Header/>
         <BackButton navigation={this.props.navigation}/>
+
         <ScrollView style={styles.scrollViewContainer}>
+          <View style={styles.container}>
 
-        <View style={styles.container}>
+            {this.renderText('Name:', this.props.beastSelected.name)}
+            <View style={styles.imageContainer}>
+              <Image style={styles.image} source={{uri: this.props.beastSelected.image}} />
+            </View>
+            {this.renderText('Description:', this.props.beastSelected.description)}
 
-        <View style={styles.imageContainer}>
-          <Image style={styles.image} source={{uri: this.props.beastSelected.image}} />
-        </View>
+            {this.renderCategoriesText('Temperment', this.props.beastSelected.temperment)}
+            {this.renderCategoriesText('Color', this.props.beastSelected.color)}
+            {this.renderCategoriesText('Hairy', this.props.beastSelected.hairy)}
 
-        <View style={styles.textContainer}>
-          <Text style={standardTextBlack}>Name: {this.props.beastSelected.name}</Text>
-        </View>
+            <View style={styles.line}/>
 
-        <View style={styles.textContainer2}>
-          <Text style={standardTextBlack}>Description: {this.props.beastSelected.description}</Text>
-        </View>
-        <View style={styles.textContainer2}>
-          <Text style={standardTextBlack}>Temperment: {this.props.beastSelected.temperment}</Text>
-        </View>
-        <View style={styles.textContainer2}>
-          <Text style={standardTextBlack}>Color: {this.props.beastSelected.color}</Text>
-        </View>
-        <View style={styles.textContainer2}>
-          <Text style={standardTextBlack}>Hairy: {this.props.beastSelected.hairy}</Text>
-        </View>
+            <View style={styles.textContainerPadding}>
+              <Text style={styles.standardTextSmallBlack}>Book Appointment</Text>
+            </View>
 
-        <View style={styles.line}/>
+            <Calendar
+              style={{width: SCREEN_WIDTH}}
+              minDate={today}
+              maxDate={maxDate}
 
-        <View style={styles.textContainer3}>
-          <Text style={standardTextBlack}>Book Appointment</Text>
-        </View>
+              onDayPress={this.onDaySelect}
+              markedDates={this.state.markedDates}
+            />
 
-        <Calendar
-
-            // we use moment.js to give the minimum and maximum dates.
-          style={{width: SCREEN_WIDTH
-
-
-          }}
-          minDate={_today}
-          maxDate={_maxDate}
-              // hideArrows={true}
-          onDayPress={this.onDaySelect}
-          markedDates={this.state._markedDates}
-        />
-
-        <Button
-          large
-          title='Schedule Appointment'
-          onPress={() => this.scheduleAppointment()}/>
+            <View style={styles.buttonContainer}>
+              <Button
+                backgroundColor={'#202020'}
+                title={this.renderButtonText()}
+                onPress={() => this.scheduleAppointment()}
+              />
+            </View>
 
           </View>
-
         </ScrollView>
-
       </View>
     );
   }
@@ -152,10 +168,29 @@ const styles = StyleSheet.create({
   scrollViewContainer: {
     flex: 1,
     marginTop: 60,
+    backgroundColor: 'white'
+  },
+  textContainerPadding: {
+    flex: 1,
+    padding: 10
+  },
+  textContainer: {
+    flex: 1,
+  },
+  standardTextBlack: {
+    fontSize: 15,
+    color: 'black',
+    textAlign: 'center',
+    fontWeight: 'bold',
+  },
+  standardTextSmallBlack: {
+    fontSize: 15,
+    color: 'black',
+    textAlign: 'center',
   },
   imageContainer: {
     height: 100,
-    margin: 10,
+    margin: 5,
   },
   image: {
     width: 100,
@@ -168,21 +203,15 @@ const styles = StyleSheet.create({
     borderColor: 'black',
     paddingBottom: 15
   },
-  textContainer: {
+  buttonContainer: {
     flex: 1,
-    padding: 5
-  },
-  textContainer2: {
-    flex: 1,
-  },
-  textContainer3: {
-    flex: 1,
-    padding: 10
+    margin: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 
 const mapStateToProps = (state) => ({
-      //Course State
   beastSelected: state.select.beastSelected,
 });
 

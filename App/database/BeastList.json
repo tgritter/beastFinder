@@ -2,42 +2,42 @@
   "beasts": [
     {
       "name": "Red Beast",
-      "description": "Trapped in a bubble",
-      "temperment": "Scary",
-      "color": "Red",
-      "hairy": "Yes",
+      "description": "Beast in a bubble",
+      "temperment": "scary",
+      "color": "red",
+      "hairy": "yes",
       "image": "https://s3.amazonaws.com/beastfinder/beastimages/beast_red.jpg"
-    }, 
+    },
     {
       "name": "Blue Beast",
       "description": "Just a friendly happy beast",
-      "temperment": "Friendly",
-      "color": "Blue",
-      "hairy": "Yes",
+      "temperment": "friendly",
+      "color": "blue",
+      "hairy": "yes",
       "image": "https://s3.amazonaws.com/beastfinder/beastimages/beast_blue.jpg"
     },
     {
       "name": "Pink Beast",
       "description": "Not afraid to run away",
-      "temperment": "Timid",
-      "color": "Pink",
-      "hairy": "No",
+      "temperment": "timid",
+      "color": "pink",
+      "hairy": "no",
       "image": "https://s3.amazonaws.com/beastfinder/beastimages/beast_pink.jpg"
     },
     {
       "name": "Purple Beast",
       "description": "A frigtening beast",
-      "temperment": "Scary",
-      "color": "Purple",
-      "hairy": "Yes",
+      "temperment": "scary",
+      "color": "purple",
+      "hairy": "yes",
       "image": "https://s3.amazonaws.com/beastfinder/beastimages/beast_purple.jpg"
     },
     {
-      "name": "Yellow Beast",
+      "name": "Gold Beast",
       "description": "Confused by all he sees",
-      "temperment": "Timid",
-      "color": "Yellow",
-      "hairy": "No",
+      "temperment": "timid",
+      "color": "gold",
+      "hairy": "no",
       "image": "https://s3.amazonaws.com/beastfinder/beastimages/beast_yellow.jpg"
     },
   ]

@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, Dimensions, Picker } from 'react-native';
-import {SCREEN_WIDTH, SCREEN_HEIGHT} from '../constants/Constants';
+import {SCREEN_WIDTH, SCREEN_HEIGHT, TEXT_TYPES} from '../constants/Constants';
 import { setBeastTemperment, setBeastColor, setBeastHairy } from '../redux/actions';
 import { connect } from 'react-redux';
 import { Button } from 'react-native-elements';
@@ -11,9 +11,68 @@ class BeastFilter extends React.Component {
 
   constructor() {
     super();
-    this.state = {
-      language: "java",
-    }
+  }
+
+  renderColorPicker(){
+    return(
+      <View style={styles.optionContainer}>
+        <View style={styles.textContainer}>
+          <Text style={styles.standardTextBlack}>Select Color</Text>
+        </View>
+        <Picker
+          selectedValue={this.props.beastColor}
+          style={styles.picker}
+          mode={'dropdown'}
+          onValueChange={(itemValue, itemIndex) => this.props.setBeastColor(itemValue)}>
+          <Picker.Item label="Any" value="any" />
+          <Picker.Item label="Red" value="red" />
+          <Picker.Item label="Blue" value="blue" />
+          <Picker.Item label="Pink" value="pink" />
+          <Picker.Item label="Purple" value="purple" />
+          <Picker.Item label="Gold" value="gold" />
+        </Picker>
+      </View>
+    )
+  }
+
+  renderHairyPicker(){
+    return(
+      <View style={styles.optionContainer}>
+        <View style={styles.textContainer}>
+          <Text style={styles.standardTextBlack}>Select Hairy</Text>
+        </View>
+        <Picker
+          selectedValue={this.props.beastHairy}
+          style={styles.picker}
+          mode={'dropdown'}
+          itemStyle={styles.itemStyle}
+          onValueChange={(itemValue, itemIndex) => this.props.setBeastHairy(itemValue)}>
+          <Picker.Item label="Any" value="any" />
+          <Picker.Item label="Yes" value="yes" />
+          <Picker.Item label="No" value="no" />
+        </Picker>
+      </View>
+    )
+  }
+
+  renderTempermentPicker(){
+    return(
+      <View style={styles.optionContainer}>
+        <View style={styles.textContainer}>
+          <Text style={styles.standardTextBlack}>Select Temperment</Text>
+        </View>
+        <Picker
+          selectedValue={this.props.beastTemperment}
+          style={styles.picker}
+          mode={'dropdown'}
+          onValueChange={(itemValue, itemIndex) => this.props.setBeastTemperment(itemValue)}>
+          <Picker.Item label="Any" value="any" />
+          <Picker.Item label="Friendly" value="friendly" />
+          <Picker.Item label="Scary" value="scary" />
+          <Picker.Item label="Timid" value="timid" />
+        </Picker>
+      </View>
+    )
   }
 
   render() {
@@ -24,60 +83,16 @@ class BeastFilter extends React.Component {
         <BackButton navigation={this.props.navigation}/>
         <View style={styles.spacer}/>
 
-        <View style={styles.optionContainer}>
-          <View style={styles.textContainer}>
-            <Text>Select Temperment</Text>
-          </View>
-          <Picker
-            selectedValue={this.props.beastTemperment}
-            style={styles.picker}
-            mode={'dropdown'}
-            onValueChange={(itemValue, itemIndex) => this.props.setBeastTemperment(itemValue)}>
-            <Picker.Item label="Any" value="Any" />
-            <Picker.Item label="Friendly" value="Friendly" />
-            <Picker.Item label="Scary" value="Scary" />
-            <Picker.Item label="Timid" value="Timid" />
-          </Picker>
-        </View>
-
-        <View style={styles.optionContainer}>
-          <View style={styles.textContainer}>
-            <Text>Select Color</Text>
-          </View>
-          <Picker
-            selectedValue={this.props.beastColor}
-            style={styles.picker}
-            mode={'dropdown'}
-            onValueChange={(itemValue, itemIndex) => this.props.setBeastColor(itemValue)}>
-            <Picker.Item label="Any" value="Any" />
-            <Picker.Item label="Red" value="Red" />
-            <Picker.Item label="Blue" value="Blue" />
-            <Picker.Item label="Pink" value="Pink" />
-            <Picker.Item label="Purple" value="Purple" />
-            <Picker.Item label="Yellow" value="Yellow" />
-          </Picker>
-        </View>
-
-        <View style={styles.optionContainer}>
-          <View style={styles.textContainer}>
-            <Text>Select Hairy</Text>
-          </View>
-          <Picker
-            selectedValue={this.props.beastHairy}
-            style={styles.picker}
-            mode={'dropdown'}
-            onValueChange={(itemValue, itemIndex) => this.props.setBeastHairy(itemValue)}>
-            <Picker.Item label="Any" value="Any" />
-            <Picker.Item label="Hairy" value="Yes" />
-            <Picker.Item label="Not Hairy" value="No" />
-          </Picker>
-        </View>
+        {this.renderColorPicker()}
+        {this.renderHairyPicker()}
+        {this.renderTempermentPicker()}
 
         <Button
-          large
+          backgroundColor={'#202020'}
+          icon={{name: 'sort'}}
           title='Filter Choices'
-          onPress={() => navigate('Finder')}/>
-
+          onPress={() => navigate('Finder')}
+        />
       </View>
     );
   }
@@ -96,6 +111,8 @@ const styles = StyleSheet.create({
   picker: {
     width: 130,
     height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   optionContainer: {
     width: SCREEN_WIDTH - 50,
@@ -111,22 +128,33 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   textContainer: {
-    flex: 1,
-    alignItems: 'center',
+    width: 150,
+    height: 50,
+    alignItems: 'flex-end',
     justifyContent: 'center',
     padding: 5,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+  },
+  standardTextBlack: {
+    fontSize: 15,
+    color: 'black',
+    textAlign: 'center',
+    fontWeight: 'bold',
+  },
+  buttonStyle: {
+    width: 300,
+    backgroundColor: 'transparent',
+    borderColor: 'white',
+    borderWidth: 1,
+    borderRadius: 10,
+    marginTop: 10,
   },
 });
 
 const mapStateToProps = (state) => ({
-    //Course State
-    beastTemperment: state.filter.beastTemperment,
-    beastColor: state.filter.beastColor,
-    beastHairy: state.filter.beastHairy,
-
+  beastTemperment: state.filter.beastTemperment,
+  beastColor: state.filter.beastColor,
+  beastHairy: state.filter.beastHairy,
 });
 
 export default connect(mapStateToProps, { setBeastTemperment, setBeastColor, setBeastHairy })(BeastFilter);

@@ -1,9 +1,9 @@
 import {FILTER_TYPE} from '../actions/types';
 
 const INITIAL_STATE = {
-  beastTemperment: 'Any',
-  beastColor: 'Any',
-  beastHairy: 'Any'
+  beastTemperment: 'any',
+  beastColor: 'any',
+  beastHairy: 'any'
 };
 
 export default (state = INITIAL_STATE, action) => {

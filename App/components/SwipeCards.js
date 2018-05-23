@@ -5,7 +5,7 @@ import SwipeCards from 'react-native-swipe-cards';
 import { setBeastType, setSelectedBeast } from '../redux/actions';
 import { connect } from 'react-redux';
 
-var customData = require('../database/BeastList.json')
+var beastList = require('../database/BeastList.json')
 
 class Card extends React.Component {
   constructor(props) {
@@ -13,18 +13,19 @@ class Card extends React.Component {
   }
 
   render() {
-    const { standardTextWhite } = TEXT_TYPES;
     return (
-      <View style={styles.card}>
+      <View style={styles.card, {backgroundColor: this.props.color, borderRadius: 10}}>
         <View style={styles.cardTop}>
-          <Text style={standardTextWhite}>{this.props.name}</Text>
+          <Text style={styles.standardTextWhite}>{this.props.name}</Text>
         </View>
         <Image style={styles.thumbnail} source={{uri: this.props.image}} />
         <View style={styles.cardBottom}>
-          <Text style={standardTextWhite}>{this.props.description}</Text>
-          <Text style={standardTextWhite}>Temperment: {this.props.temperment}</Text>
-          <Text style={standardTextWhite}>Color: {this.props.color}</Text>
-          <Text style={standardTextWhite}>Hairy: {this.props.hairy}</Text>
+          <View style={styles.descriptionContainer}>
+            <Text style={styles.standardTextWhite}>Description: {this.props.description}</Text>
+          </View>
+          <Text style={styles.standardTextWhite}>Temperment: {this.props.temperment}</Text>
+          <Text style={styles.standardTextWhite}>Color: {this.props.color}</Text>
+          <Text style={styles.standardTextWhite}>Hairy: {this.props.hairy}</Text>
         </View>
       </View>
     )
@@ -38,8 +39,8 @@ class NoMoreCards extends Component {
 
   render() {
     return (
-      <View>
-        <Text style={styles.noMoreCardsText}>No more cards</Text>
+      <View style={styles.container}>
+        <Text style={styles.noMoreCardsText}>No more beasts</Text>
       </View>
     )
   }
@@ -49,63 +50,42 @@ class NoMoreCards extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      cards: customData.beasts
+      cards: beastList.beasts
     };
   }
 
   handleYup (card) {
-    this.props.setSelectedBeast(card)
     const { navigate } = this.props.navigation;
+    this.props.setSelectedBeast(card)
     navigate('Scheduler')
-
   }
   handleNope (card) {
     console.log(`Nope for ${card.name}`)
   }
-  handleMaybe (card) {
-    console.log(`Maybe for ${card.name}`)
+
+  filterHelper(list, categoryProps, category){
+    var newList = list
+    if(categoryProps != 'any'){
+      newList = newList.filter(function(item){
+        return item[category] == categoryProps;
+      });
+    }
+    return newList
   }
 
-
   filterList(cards){
-
     var newList = cards
 
-    var beastTemperment = this.props.beastTemperment
-    var beastColor = this.props.beastColor
-    var beastHairy = this.props.beastHairy
-
-    console.log('BeastTemperment: ' + beastTemperment)
-    console.log('BeastTemperment: ' + beastColor)
-    console.log('BeastTemperment: ' + beastHairy)
-
-    if(beastTemperment != 'Any'){
-      newList = newList.filter(function(card){
-        return card.temperment == beastTemperment;
-      });
-    }
-
-    if(beastColor != 'Any'){
-      newList = newList.filter(function(card){
-        return card.color == beastColor;
-      });
-    }
-
-    if(beastHairy != 'Any'){
-      newList = newList.filter(function(card){
-        return card.hairy == beastHairy;
-      });
-    }
+    var newList = this.filterHelper(newList, this.props.beastTemperment, 'temperment')
+    var newList = this.filterHelper(newList, this.props.beastColor, 'color')
+    var newList = this.filterHelper(newList, this.props.beastHairy, 'hairy')
 
     return newList
   }
 
   render() {
-    // If you want a stack of cards instead of one-per-one view, activate stack mode
-    // stack={true}
-    var filteredList = this.filterList(this.state.cards)
 
-    console.log('FilteredListTest: ' + JSON.stringify(filteredList))
+    var filteredList = this.filterList(this.state.cards)
 
     return (
       <SwipeCards
@@ -116,22 +96,23 @@ class NoMoreCards extends Component {
         handleYup={this.handleYup.bind(this)}
         handleNope={this.handleNope}
         showMaybe={false}
-        hasMaybeAction
+
       />
     )
   }
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   card: {
     justifyContent: 'center',
     alignItems: 'center',
     width: 300,
     height: 450,
-    backgroundColor: 'blue',
-    borderWidth: 1,
-    borderColor: 'black',
-    borderRadius: 10,
   },
   noMoreCardsText: {
     fontSize: 22,
@@ -148,6 +129,17 @@ const styles = StyleSheet.create({
     width: 300,
     height: 100,
   },
+  descriptionContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 3
+  },
+  standardTextWhite: {
+    fontSize: 15,
+    color: 'white',
+    textAlign: 'center',
+    fontWeight: 'bold',
+  },
   thumbnail: {
     width: 300,
     height: 300,
@@ -155,11 +147,9 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = (state) => ({
-    //Course State
-    beastTemperment: state.filter.beastTemperment,
-    beastColor: state.filter.beastColor,
-    beastHairy: state.filter.beastHairy,
-
+  beastTemperment: state.filter.beastTemperment,
+  beastColor: state.filter.beastColor,
+  beastHairy: state.filter.beastHairy,
 });
 
 export default connect(mapStateToProps, { setBeastType, setSelectedBeast })(SwipeCard);

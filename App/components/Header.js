@@ -12,7 +12,7 @@ export default class Header extends React.Component {
     return (
       <View style={styles.header}>
         <View style={styles.flex}>
-          <Text style={styles.headerText}>Beast Keeper</Text>
+          <Text style={styles.headerText}>Beast Finder</Text>
         </View>
       </View>
     );

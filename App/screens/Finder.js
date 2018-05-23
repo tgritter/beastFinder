@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, Dimensions } from 'react-native';
 import SwipeCards from '../components/SwipeCards'
 import FilterButton from '../components/FilterButton'
+import SwipeExplain from '../components/SwipeExplain'
 import Header from '../components/Header'
 import {SCREEN_WIDTH, SCREEN_HEIGHT} from '../constants/Constants';
 
@@ -9,17 +10,18 @@ export default class Finder extends React.Component {
   constructor(props) {
     super(props);
   }
-  
+
   render() {
     return (
       <View style={styles.container}>
         <Header/>
         <FilterButton navigation={this.props.navigation}/>
         <SwipeCards style={{flex: 1}} navigation={this.props.navigation}/>
+        <SwipeExplain/> 
       </View>
     );
   }
-} 
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -31,8 +33,8 @@ const styles = StyleSheet.create({
   header: {
     position: 'absolute',
     top: 0,
-    backgroundColor: 'black', 
-    width: SCREEN_WIDTH,  
+    backgroundColor: 'black',
+    width: SCREEN_WIDTH,
     height: 50,
   },
 });

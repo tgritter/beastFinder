@@ -92,7 +92,8 @@ class NoMoreCards extends Component {
         cards={filteredList}
         renderCard={(cardData) => <Card {...cardData} />}
         renderNoMoreCards={() => <NoMoreCards />}
-
+        yupStyle={styles.yupStyle}
+        nopeStyle={styles.nopeStyle}
         handleYup={this.handleYup.bind(this)}
         handleNope={this.handleNope}
         showMaybe={false}
@@ -116,6 +117,16 @@ const styles = StyleSheet.create({
   },
   noMoreCardsText: {
     fontSize: 22,
+  },
+  yupStyle: {
+    position: 'absolute',
+    right: 10,
+    bottom: 50,
+  },
+  nopeStyle: {
+    position: 'absolute',
+    left: 10,
+    bottom: 50,
   },
   cardTop: {
     justifyContent: 'center',

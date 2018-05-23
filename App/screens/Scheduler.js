@@ -11,7 +11,7 @@ import { Button } from 'react-native-elements';
 import moment from 'moment'
 const format = 'YYYY-MM-DD'
 const today = moment().format(format)
-const maxDate = moment().add(30, 'days').format(format)
+const maxDate = moment().add(60, 'days').format(format)
 
 class Scheduler extends React.Component {
   // It is not possible to select some to current day.
